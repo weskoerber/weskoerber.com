@@ -1,0 +1,26 @@
+base_url = "https://weskoerber.com"
+build_search_index = true
+compile_sass = true
+generate_feed = true
+minify_html = true
+title = "Wes Koerber"
+theme = "apollo"
+
+[markdown]
+highlight_code = true
+highlight_theme = "gruvbox-dark"
+
+[extra]
+custom_css = []
+menu = []
+socials = [
+    { name = "github", url = "https://github.com/weskoerber", icon = "github" }
+]
+theme = "dark"
+toc = true
+use_cdn = false
+
+[extra.analytics]
+enabled = false
+goatcounter_user = ""
+goatcounter_host = ""
