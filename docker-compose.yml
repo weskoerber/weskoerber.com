@@ -1,17 +1,17 @@
 version: '3.4'
 services:
   dev:
-    build:
-      context: ./
-      dockerfile: ./Dockerfile
-    command: serve --interface ${ZOLA_SERVE_IFACE:-0.0.0.0} --port ${ZOLA_SERVE_PORT:-8085} --base-url ${ZOLA_SERVE_URL:-localhost}
+    image: ghcr.io/getzola/zola:v0.16.1
     ports:
       - ${ZOLA_RELOAD_PORT:-8086}:${ZOLA_RELOAD_PORT:-8086}
       - ${ZOLA_SERVE_PORT:-8085}:${ZOLA_SERVE_PORT:-8085}
-  builder:
-    build:
-      context: ./
-      dockerfile: ./Dockerfile
-    command: build
     volumes:
-      - ./public/:/var/www/app/
+      - ./:/app/
+    working_dir: /app
+    command: serve --interface ${ZOLA_SERVE_IFACE:-0.0.0.0} --port ${ZOLA_SERVE_PORT:-8085} --base-url ${ZOLA_SERVE_URL:-localhost}
+  builder:
+    image: ghcr.io/getzola/zola:v0.16.1
+    volumes:
+      - ./:/app/
+    working_dir: /app
+    command: build

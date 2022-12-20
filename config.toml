@@ -22,6 +22,6 @@ toc = true
 use_cdn = false
 
 [extra.analytics]
-enabled = false
-goatcounter_user = ""
-goatcounter_host = ""
+enabled = true
+goatcounter_user = "weskoerber"
+goatcounter_host = "goatcounter.com"
