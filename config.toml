@@ -14,7 +14,8 @@ highlight_theme = "gruvbox-dark"
 custom_css = []
 menu = []
 socials = [
-    { name = "github", url = "https://github.com/weskoerber", icon = "github" }
+    { name = "github", url = "https://github.com/weskoerber", icon = "github" },
+    { name = "linkedin", url = "https://www.linkedin.com/in/weskoerber/", icon = "linkedin" }
 ]
 theme = "dark"
 toc = true
