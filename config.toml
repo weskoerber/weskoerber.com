@@ -12,13 +12,19 @@ highlight_theme = "gruvbox-dark"
 
 [extra]
 custom_css = []
-menu = []
+menu = [
+    { name = "/blog", url = "/blog", weight = 1 },
+    { name = "/resume", url = "/resume", weight = 2 },
+    { name = "/about", url = "/about", weight = 3 }
+]
 socials = [
     { name = "github", url = "https://github.com/weskoerber", icon = "github" },
-    { name = "linkedin", url = "https://www.linkedin.com/in/weskoerber/", icon = "linkedin" }
+    { name = "gitlab", url = "https://gitlab.com/weskoerber", icon = "gitlab" },
+    { name = "linkedin", url = "https://www.linkedin.com/in/weskoerber/", icon = "linkedin" },
+    { name = "email", url = "mailto:wes@weskoerber.com", icon = "email" }
 ]
 theme = "dark"
-toc = true
+# toc = true
 use_cdn = false
 
 [extra.analytics]
