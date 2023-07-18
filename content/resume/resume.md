@@ -24,7 +24,7 @@ successful project implementation
 - Cross-platform applications
     - [Avalonia](https://www.avaloniaui.net/) C# MVVM
 - Full-stack web development
-    - ReactJS frontent
+    - ReactJS frontend
     - [LAMP stack](https://aws.amazon.com/what-is/lamp-stack/) backend
 
 # Work Experience
@@ -53,12 +53,12 @@ applications, network-enabled embedded systems, and server-side services
 ## Open Source
 
 Check out my highlighted open-source projects on my
-[portfolio](resume/portfolio) page.
+[portfolio](/resume/portfolio) page.
 
 - Github: <a href="https://github.com/weskoerber">https://github.com/weskoerber</a>
 - Gitlab: <a href="https://gitlab.com/weskoerber">https://gitlab.com/weskoerber</a>
 
 # Questions?
 
-I'd love to hear from you. View my contact information on the [about](about)
+I'd love to hear from you. View my contact information on the [about](/about)
 page to get in touch.
