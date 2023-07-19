@@ -23,7 +23,7 @@ socials = [
     { name = "linkedin", url = "https://www.linkedin.com/in/weskoerber/", icon = "linkedin" },
     { name = "email", url = "mailto:wes@weskoerber.com", icon = "email" }
 ]
-theme = "dark"
+theme = "toggle"
 # toc = true
 use_cdn = false
 
