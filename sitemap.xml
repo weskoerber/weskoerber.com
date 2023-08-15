@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://weskoerber.com/</loc>
+    </url>
+    <url>
+        <loc>https://weskoerber.com/about/</loc>
+    </url>
+    <url>
+        <loc>https://weskoerber.com/blog/</loc>
+    </url>
+    <url>
+        <loc>https://weskoerber.com/landing/</loc>
+    </url>
+    <url>
+        <loc>https://weskoerber.com/resume/</loc>
+    </url>
+    <url>
+        <loc>https://weskoerber.com/resume/portfolio/</loc>
+    </url>
+    <url>
+        <loc>https://weskoerber.com/resume/portfolio/cmake-template/</loc>
+    </url>
+</urlset>
