@@ -1,7 +1,7 @@
 +++
-title = "Portfolio"
+title = "Projects"
 template = "cards_with_content.html"
-path = "resume/portfolio"
+path = "projects"
 +++
 
 These are my highlighted projects, available on
