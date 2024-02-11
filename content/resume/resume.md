@@ -53,7 +53,7 @@ applications, network-enabled embedded systems, and server-side services
 ## Open Source
 
 Check out my highlighted open-source projects on my
-[portfolio](/resume/portfolio) page.
+[portfolio](/portfolio) page.
 
 - Github: <a href="https://github.com/weskoerber">https://github.com/weskoerber</a>
 - Gitlab: <a href="https://gitlab.com/weskoerber">https://gitlab.com/weskoerber</a>

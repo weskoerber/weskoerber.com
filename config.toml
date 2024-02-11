@@ -14,8 +14,8 @@ highlight_theme = "gruvbox-dark"
 custom_css = []
 menu = [
     { name = "/blog", url = "/blog", weight = 1 },
-    { name = "/portfolio", url = "/resume/portfolio", weight = 2 },
-    { name = "/about", url = "/about", weight = 4 }
+    { name = "/portfolio", url = "/portfolio", weight = 2 },
+    { name = "/about", url = "/about", weight = 3 }
 ]
 socials = [
     { name = "github", url = "https://github.com/weskoerber", icon = "github" },
