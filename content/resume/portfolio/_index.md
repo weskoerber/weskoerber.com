@@ -5,6 +5,7 @@ path = "resume/portfolio"
 +++
 
 These are my highlighted projects, available on
-[GitHub](https://github.com/weskoerber).
+[GitHub](https://github.com/weskoerber). If you like what you see here, check
+out my [resume](/resume)!
 
 ---
