@@ -13,7 +13,7 @@ highlight_theme = "gruvbox-dark"
 [extra]
 custom_css = []
 menu = [
-    { name = "/blog", url = "/blog", weight = 1 },
+    { name = "/posts", url = "/posts", weight = 1 },
     { name = "/projects", url = "/projects", weight = 2 },
     { name = "/about", url = "/about", weight = 3 }
 ]
