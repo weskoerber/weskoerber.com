@@ -8,7 +8,7 @@ services:
     volumes:
       - ./:/app/
     working_dir: /app
-    command: serve --interface ${ZOLA_SERVE_IFACE:-0.0.0.0} --port ${ZOLA_SERVE_PORT:-8085} --base-url ${ZOLA_SERVE_URL:-localhost}
+    command: serve --drafts --interface ${ZOLA_SERVE_IFACE:-0.0.0.0} --port ${ZOLA_SERVE_PORT:-8085} --base-url ${ZOLA_SERVE_URL:-localhost}
   builder:
     image: ghcr.io/getzola/zola:v0.18.0
     volumes:

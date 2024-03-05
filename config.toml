@@ -11,6 +11,7 @@ highlight_code = true
 highlight_theme = "gruvbox-dark"
 
 [extra]
+comment = false
 custom_css = []
 menu = [
     { name = "/posts", url = "/posts", weight = 1 },
@@ -29,5 +30,7 @@ use_cdn = false
 
 [extra.analytics]
 enabled = true
-goatcounter_user = "weskoerber"
-goatcounter_host = "goatcounter.com"
+
+[extra.analytics.goatcounter]
+user = "weskoerber"
+host = "goatcounter.com"
