@@ -1,4 +1,3 @@
-version: '3.4'
 services:
   dev:
     image: ghcr.io/getzola/zola:v0.18.0
