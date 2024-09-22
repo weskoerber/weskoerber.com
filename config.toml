@@ -25,7 +25,7 @@ socials = [
     { name = "email", url = "mailto:wes@weskoerber.com", icon = "email" }
 ]
 theme = "toggle"
-# toc = true
+toc = true
 use_cdn = false
 
 [extra.analytics]
