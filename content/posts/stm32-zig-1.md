@@ -1,7 +1,6 @@
 +++
 title = "STM32 'Hello, world!' with Zig"
 date = "2024-09-23"
-draft = true
 +++
 
 # Introduction
