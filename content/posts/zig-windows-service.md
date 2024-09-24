@@ -357,3 +357,105 @@ endless. Here are some examples:
 - Content synchronization
 - Web APIs
 - Notifications
+
+# Full example
+
+```zig
+const service_name = "My Awesome Service";
+
+pub fn main() void {
+    const service_table = [_]win32.system.services.SERVICE_TABLE_ENTRYA{
+        .{
+            .lpServiceName = @constCast(service_name.ptr),
+            .lpServiceProc = serviceMain,
+        },
+        .{ .lpServiceName = null, .lpServiceProc = null },
+    };
+
+    if (win32.system.services.StartServiceCtrlDispatcherA(&service_table[0]) > 0) {
+        // error
+    }
+}
+
+pub fn serviceMain(argc: u32, argv: ?*?[*:0]const u8) callconv(std.os.windows.WINAPI) void {
+    _ = argc;
+    _ = argv;
+
+    const status_handle = win32.system.services.RegisterServiceCtrlHandlerExA(service_name.ptr, serviceControl, null);
+    if (status_handle == 0) {
+        // error
+        return;
+    }
+
+    const stop_event = win32.system.threading.CreateEventA(null, 0, 1, null);
+    if (stop_event == null) {
+        // error
+        return;
+    }
+
+    var service_data = ServiceData{
+        .handle = status_handle.
+        .stop_event = stop_event,
+    };
+
+    service_data.status.dwCurrentState = .RUNNING;
+    service_data.status.dwControlsAccepted = win32.system.services.SERVICE_CONTROL_STOP | win32.system.services.SERVICE_CONTROL_SHUTDOWN;
+    if (services.SetServiceStatus(service_data.handle, &service_data.status) == 0) {
+        // error
+    }
+
+    if (win32.system.threading.WaitForSingleObject(service_data.stop_event, win32.system.windows_programming.INFINITE) != 0) {
+        // error
+        return;
+    }
+
+    service_data.status.dwCurrentState = .STOPPED;
+    if (services.SetServiceStatus(service_data.handle, &service_data.status) != 0) {
+        // error
+    }
+}
+
+pub fn serviceControl(
+    code: u32,
+    event_type: u32,
+    event_data: ?*anyopaque,
+    context: ?*anyopaque,
+) callconv(std.os.windows.WINAPI) u32 {
+    _ = event_type;
+    _ = event_data;
+
+    var service_data: *ServiceData = @alignCast(@ptrCast(context.?));
+
+    const err: win32.foundation.WIN32_ERROR = switch (code) {
+        win32.system.services.SERVICE_CONTROL_STOP, win32.system.services.SERVICE_CONTROL_SHUTDOWN => blk: {
+            service_data.status.dwCurrentState = .STOP_PENDING;
+            if (win32.system.services.SetServiceStatus(service_data.handle, &service_data.status) == 0) {
+                // error
+            }
+            if (win32.system.threading.SetEvent(service_data.stop_event) == 0) {
+                // error
+            }
+            break :blk .NO_ERROR;
+        },
+        win32.system.services.SERVICE_CONTROL_INTERROGATE => .NO_ERROR,
+        else => .ERROR_CALL_NOT_IMPLEMENTED,
+    };
+
+    return @intFromEnum(err);
+}
+
+const std = @import("std");
+const win32 = @import("win32");
+const ServiceData = struct {
+    handle: isize = -1,
+    status: win32.system.services.SERVICE_STATUS = .{
+        .dwServiceType = win32.system.services.SERVICE_WIN32_OWN_PROCESS,
+        .dwCurrentState = .START_PENDING,
+        .dwControlsAccepted = 0,
+        .dwWin32ExitCode = 0,
+        .dwServiceSpecificExitCode = 0,
+        .dwCheckPoint = 0,
+        .dwWaitHint = 0,
+    },
+    stop_event: ?*anyopaque = null,
+};
