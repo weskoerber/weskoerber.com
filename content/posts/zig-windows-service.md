@@ -257,8 +257,8 @@ pub fn serviceMain(argc: u32, argv: ?*?[*:0]const u8) callconv(std.os.windows.WI
         return;
     }
 
-    service_data.status_data.dwCurrentState = .STOPPED;
-    if (services.SetServiceStatus(service_data.status_handle, &service_data.status_data) != 0) {
+    service_data.status.dwCurrentState = .STOPPED;
+    if (services.SetServiceStatus(service_data.handle, &service_data.status) != 0) {
         // error
     }
 ```
@@ -322,8 +322,8 @@ function.
     // -- snip --
 
     const err: win32.foundation.WIN32_ERROR = switch (code) {
-        services.SERVICE_CONTROL_STOP, services.SERVICE_CONTROL_SHUTDOWN => blk: {
-            service_data.status_data.dwCurrentState = .STOP_PENDING;
+        win32.system.services.SERVICE_CONTROL_STOP, win32.system.services.SERVICE_CONTROL_SHUTDOWN => blk: {
+            service_data.status.dwCurrentState = .STOP_PENDING;
             if (win32.system.services.SetServiceStatus(service_data.handle, &service_data.status) == 0) {
                 // error
             }
