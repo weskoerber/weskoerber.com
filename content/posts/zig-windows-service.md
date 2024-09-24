@@ -394,13 +394,13 @@ pub fn serviceMain(argc: u32, argv: ?*?[*:0]const u8) callconv(std.os.windows.WI
     }
 
     var service_data = ServiceData{
-        .handle = status_handle.
+        .handle = status_handle,
         .stop_event = stop_event,
     };
 
     service_data.status.dwCurrentState = .RUNNING;
     service_data.status.dwControlsAccepted = win32.system.services.SERVICE_CONTROL_STOP | win32.system.services.SERVICE_CONTROL_SHUTDOWN;
-    if (services.SetServiceStatus(service_data.handle, &service_data.status) == 0) {
+    if (win32.system.services.SetServiceStatus(service_data.handle, &service_data.status) == 0) {
         // error
     }
 
@@ -410,7 +410,7 @@ pub fn serviceMain(argc: u32, argv: ?*?[*:0]const u8) callconv(std.os.windows.WI
     }
 
     service_data.status.dwCurrentState = .STOPPED;
-    if (services.SetServiceStatus(service_data.handle, &service_data.status) != 0) {
+    if (win32.system.services.SetServiceStatus(service_data.handle, &service_data.status) != 0) {
         // error
     }
 }
