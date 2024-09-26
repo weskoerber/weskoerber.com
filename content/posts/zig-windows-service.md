@@ -76,7 +76,8 @@ can define the services that run within our process as a [service
 table](https://learn.microsoft.com/en-us/windows/win32/api/winsvc/ns-winsvc-service_table_entrya).
 Each entry in this table contains a string holding the service name and a
 function pointer that points to the service's entry point. In this case, it's
-our `serviceMain` function. Let's define the service table in our main function.
+our `serviceMain` function. Let's define the service table in our main
+function.
 
 ```zig
 const service_name = "My Awesome Service";
@@ -118,32 +119,12 @@ After calling `StartServiceCtrlDispatcherA` and creating the connection, the
 service control manager will call our `serviceMain` function we registered in
 the table earlier.
 
-Once we enter `serviceMain`, the service control manager needs to send events to
-our service. For example, in the services console in Windows, right-clicking a
-service displays a menu with some actions: Start, Stop, Pause, Restart, etc.
+Once we enter `serviceMain`, the service control manager needs to send events
+to our service. For example, in the services console in Windows, right-clicking
+a service displays a menu with some actions: Start, Stop, Pause, Restart, etc.
 These are all events that our service needs to handle. But before we handle
 anything, we need to tell the service control manager where to send its events.
 This is where the `serviceControl` function comes in.
-
-## Registering the control handler
-
-Inside our `serviceMain` function we'll register the `serviceControl` function
-with the service control manager, telling it to call this function when an
-event is generated. We do this with the
-[`RegisterServiceCtrlHandlerExA`](https://learn.microsoft.com/en-us/windows/win32/api/winsvc/nf-winsvc-registerservicectrlhandlerexa)
-function.
-
-```zig
-pub fn serviceMain(argc: u32, argv: ?*?[*:0]const u8) callconv(std.os.windows.WINAPI) void {
-    const status_handle = win32.system.services.RegisterServiceCtrlHandlerExA(service_name.ptr, serviceControl, null);
-    if (status_handle == 0) {
-        // error
-        return;
-    }
-}
-```
-
-This call returns a handle that we'll also need in `serviceControl`, so let's save the handle to the `status_handle` variable.
 
 ## Passing data between functions
 
@@ -152,12 +133,13 @@ sharing data between these two functions. One way is to create global variables
 that the two functions can access. However, I really don't like global data,
 and try avoid it as much as possible.
 
-You'll note that in the previous section I chose to register our
+You'll note that in the following section I choose to register our
 `serviceControl` function via `RegisterServiceCtrlHandlerExA` instead of
-`RegisterServiceCtrlHandlerA`. This was intentional. The former allows us to
+`RegisterServiceCtrlHandlerA`. This is intentional. The former allows us to
 pass in a pointer that gets forwarded to `serviceMain`.
 
-Let's create a simple `ServiceData` struct that we can provide to the control registration.
+Let's create a simple `ServiceData` struct that we can provide to the control
+registration.
 
 ```zig
 const ServiceData = struct {
@@ -177,9 +159,33 @@ const ServiceData = struct {
 
 Don't worry too much about these fields for now, we'll get to them later.
 
+## Registering the control handler
+
+Inside our `serviceMain` function we'll register the `serviceControl` function
+with the service control manager, telling it to call this function when an
+event is generated. We do this with the
+[`RegisterServiceCtrlHandlerExA`](https://learn.microsoft.com/en-us/windows/win32/api/winsvc/nf-winsvc-registerservicectrlhandlerexa)
+function. We'll also pass the address of a default `ServiceData` struct.
+
+```zig
+pub fn serviceMain(argc: u32, argv: ?*?[*:0]const u8) callconv(std.os.windows.WINAPI) void {
+    const service_data = ServiceData{};
+
+    const status_handle = win32.system.services.RegisterServiceCtrlHandlerExA(service_name.ptr, serviceControl, &service_data);
+    if (status_handle == 0) {
+        // error
+        return;
+    }
+}
+```
+
+This call returns a handle that we'll also need in `serviceControl`, so let's
+save the handle to the `status_handle` variable.
+
 ## Thread synchronization
 
-I hope I didn't scare you too badly with that section title, it's not that bad, I promise.
+I hope I didn't scare you too badly with that section title, it's not that bad,
+I promise.
 
 Our process needs to stay open as long as our services are running. If we
 return from `serviceMain`, our process closes and we lose our services. This is
@@ -206,18 +212,17 @@ pub fn serviceMain(argc: u32, argv: ?*?[*:0]const u8) callconv(std.os.windows.WI
 
 ## Up and running {#up-and-running}
 
-We now have everything we need to tell the service control manager we're running
-and ready to handle events. Let's initialize a `ServiceData` struct to hold the
-data we created in the previous steps.
+We now have everything we need to tell the service control manager we're
+running and ready to handle events. Let's make sure we assign the
+`status_handle` and `stop_event` we created in the previous steps to our
+`ServiceData` struct.
 
 ```zig
 pub fn serviceMain(argc: u32, argv: ?*?[*:0]const u8) callconv(std.os.windows.WINAPI) void {
     // -- snip --
 
-    var service_data = ServiceData{
-        .handle = status_handle,
-        .stop_event = stop_event,
-    };
+    service_data.handle = status_handle;
+    service_data.stop_event = stop_event;
 }
 ```
 
@@ -381,7 +386,9 @@ pub fn serviceMain(argc: u32, argv: ?*?[*:0]const u8) callconv(std.os.windows.WI
     _ = argc;
     _ = argv;
 
-    const status_handle = win32.system.services.RegisterServiceCtrlHandlerExA(service_name.ptr, serviceControl, null);
+    var service_data = ServiceData{};
+
+    const status_handle = win32.system.services.RegisterServiceCtrlHandlerExA(service_name.ptr, serviceControl, &service_data);
     if (status_handle == 0) {
         // error
         return;
@@ -393,10 +400,8 @@ pub fn serviceMain(argc: u32, argv: ?*?[*:0]const u8) callconv(std.os.windows.WI
         return;
     }
 
-    var service_data = ServiceData{
-        .handle = status_handle,
-        .stop_event = stop_event,
-    };
+    service_data.handle = status_handle;
+    service_data.stop_event = stop_event;
 
     service_data.status.dwCurrentState = .RUNNING;
     service_data.status.dwControlsAccepted = win32.system.services.SERVICE_CONTROL_STOP | win32.system.services.SERVICE_CONTROL_SHUTDOWN;
