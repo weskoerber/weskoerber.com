@@ -7,14 +7,16 @@
                 <time>{{ page.date | date(format="%Y-%m-%d") }}</time>
 
                 <div>
-                    <h1 class="title">
-                        <a href={{ page.permalink }}>{{page.title}}</a>
+                    <h1 class="blogroll-title">
+                        <a href={{ page.extra.source_url }} target="_blank">
+                            {{page.title}}
+                        </a>
 
                         {% if page.draft %}
                         <span class="draft-label">DRAFT</span>
                         {% endif %}
                     </h1>
-                    <a class="blogroll-src" href={{ page.extra.source }}>{{page.extra.source}}</a>
+                    <p class="blogroll-src">{{page.extra.source_name}}</a>
 
                     <div class="meta">
                         <div class="description">

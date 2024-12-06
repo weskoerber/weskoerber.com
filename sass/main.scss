@@ -2,4 +2,21 @@
 
 .blogroll-src {
   color: var(--text-1);
+  line-height: 0;
+}
+
+.blogroll-title {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.blogroll-title::before {
+  content: url("link.svg");
+  filter: brightness(0) saturate(100%) invert(44%) sepia(89%) saturate(2553%) hue-rotate(331deg) brightness(98%) contrast(91%);
+
+  width: 24px;
+  height: 24px;
+  border: unset;
+
+  vertical-align: middle;
 }
