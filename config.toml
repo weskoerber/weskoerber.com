@@ -24,7 +24,8 @@ socials = [
     { name = "github", url = "https://github.com/weskoerber", icon = "github" },
     { name = "gitlab", url = "https://gitlab.com/weskoerber", icon = "gitlab" },
     { name = "linkedin", url = "https://www.linkedin.com/in/weskoerber/", icon = "linkedin" },
-    { name = "email", url = "mailto:wes@weskoerber.com", icon = "email" }
+    { name = "email", url = "mailto:wes@weskoerber.com", icon = "email" },
+    { name = "rss", url = "https://www.weskoerber.com/atom.xml", icon = "rss" }
 ]
 theme = "toggle"
 toc = true
