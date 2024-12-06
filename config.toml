@@ -1,10 +1,13 @@
 base_url = "https://weskoerber.com"
 build_search_index = true
 compile_sass = true
-generate_feed = true
+generate_feeds = true
+feed_filenames = [ "atom.xml" ]
 minify_html = true
 title = "Wes Koerber"
 theme = "apollo"
+
+author = "Wes Koerber"
 
 [markdown]
 highlight_code = true
