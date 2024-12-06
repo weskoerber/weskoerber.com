@@ -1,0 +1,14 @@
+{% extends "apollo/templates/section.html" %}
+{% import "macros/blogroll.html" as blogroll_macros %}
+
+{% block post_list %}
+    <main class="list">
+        {%- if paginator %}
+            {%- set show_pages = paginator.pages -%}
+        {% else %}
+            {%- set show_pages = section.pages -%}
+        {% endif -%}
+
+        {{ blogroll_macros::list_blogroll(pages=show_pages) }}
+    </main>
+{% endblock post_list %}
