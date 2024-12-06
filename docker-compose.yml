@@ -1,6 +1,6 @@
 services:
   dev:
-    image: ghcr.io/getzola/zola:v0.18.0
+    image: ghcr.io/getzola/zola:v0.19.2
     ports:
       - ${ZOLA_RELOAD_PORT:-8086}:${ZOLA_RELOAD_PORT:-8086}
       - ${ZOLA_SERVE_PORT:-8085}:${ZOLA_SERVE_PORT:-8085}
