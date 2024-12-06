@@ -15,8 +15,7 @@ comment = false
 custom_css = []
 menu = [
     { name = "/posts", url = "/posts", weight = 1 },
-    { name = "/projects", url = "/projects", weight = 2 },
-    { name = "/about", url = "/about", weight = 3 }
+    { name = "/about", url = "/about", weight = 2 }
 ]
 socials = [
     { name = "github", url = "https://github.com/weskoerber", icon = "github" },
