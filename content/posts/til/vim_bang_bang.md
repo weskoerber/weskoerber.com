@@ -11,6 +11,41 @@ with its `stdout`.
 
 # Using an empty range
 
+Sometimes you may want to put the contents of a file directly into you buffer,
+but you don't want to open up the file in a separate buffer, yank the contents,
+and put them in your desired buffer.
+
+`readme.txt`
+```
+This is a readme file.
+
+I need this file in a buffer!
+```
+
+`my_buffer`
+```
+This is my buffer. I want the contents of the `readme.txt` file to go in this
+file!
+
+
+```
+
+After switching to normal mode and navigating to the empty line (the last line
+in `my_buffer`), typing `!!cat readme.txt` will but the contents of
+`readme.txt` into my buffer, starting at my cursor!
+
+`my_buffer`
+```
+This is my buffer. I want the contents of the `readme.txt` file to go in this
+file!
+
+This is a readme file.
+
+I need this file in a buffer!
+```
+
+# Replacing a single line
+
 Sometimes you want to view the content of a command's `stdout` in Vim. Usually
 what I do is run the command and pipe `stdout` into Vim's `stdin` (i.e. `vim
 -`).
@@ -53,7 +88,7 @@ replaced with multiple lines of perfectly-formatted JSON -- magic!
 }
 ```
 
-# Using an existing range
+# Replacing a range
 
 Here's another contrived example. You have a list of strings and you need to
 sort them and edit them in a buffer. Let's ignore that Vim has a built-in sort
