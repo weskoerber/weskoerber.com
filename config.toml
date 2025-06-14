@@ -1,4 +1,4 @@
-base_url = "https://weskoerber.com"
+base_url = "https://www.weskoerber.com"
 build_search_index = true
 compile_sass = true
 generate_feeds = true
