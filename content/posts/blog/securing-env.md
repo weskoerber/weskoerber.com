@@ -1,7 +1,6 @@
 +++
 title = "Securing .env files"
 date = "2026-02-14"
-draft = true
 +++
 
 # Overview
