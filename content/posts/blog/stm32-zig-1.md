@@ -270,7 +270,7 @@ We need to tell our linker about the memory layout of our target. We do so
 using the
 [`MEMORY`](https://ftp.gnu.org/old-gnu/Manuals/ld-2.9.1/html_node/ld_16.html)
 keyword:
-```ld
+```
 FLASH_SIZE = 0x80000; /* 512k flash */
 SRAM_SIZE = 0x17000; /* 92k sram */
 STACK_SIZE = 0x800; /* 2k stack */
@@ -289,7 +289,7 @@ beginning at address `0x2000_0000`. We'll use the `STACK_SIZE` variable later.
 ### Entry point {#entry-point}
 
 The linker needs an entry point. Let's define our entry point as the first vector in our vector table, `resetHandler` (see [vector table](#vector-table) below):
-```ld
+```
 ENTRY(resetHandler)
 ```
 
@@ -298,7 +298,7 @@ ENTRY(resetHandler)
 Next we define the layout of our output file with the
 [`SECTIONS`](https://ftp.gnu.org/old-gnu/Manuals/ld-2.9.1/html_node/ld_18.html#SEC18)
 keyword:
-```ld
+```
 SECTIONS
 {
 }
@@ -306,7 +306,7 @@ SECTIONS
 
 #### `.text` section
 
-```ld
+```
 SECTIONS
 {
     /* snip */
@@ -342,7 +342,7 @@ Standard
 says that the stack must be double word (8-byte) aligned, not single word
 (4-byte).
 
-```ld
+```
 SECTIONS
 {
     /* snip */
@@ -366,7 +366,7 @@ SECTIONS
 
 #### `.data` section
 
-```ld
+```
 SECTIONS
 {
     /* snip */
@@ -400,7 +400,7 @@ the `flash` region. This is important for understanding [what happens before
 
 #### `.bss` section
 
-```ld
+```
 SECTIONS
 {
     /* snip */
