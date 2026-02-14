@@ -1,6 +1,6 @@
 services:
   dev:
-    image: ghcr.io/getzola/zola:v0.19.2
+    image: ghcr.io/getzola/zola:v0.22.1
     ports:
       - ${ZOLA_RELOAD_PORT:-8086}:${ZOLA_RELOAD_PORT:-8086}
       - ${ZOLA_SERVE_PORT:-8085}:${ZOLA_SERVE_PORT:-8085}
@@ -9,7 +9,7 @@ services:
     working_dir: /app
     command: serve --drafts --interface ${ZOLA_SERVE_IFACE:-0.0.0.0} --port ${ZOLA_SERVE_PORT:-8085} --base-url ${ZOLA_SERVE_URL:-localhost}
   builder:
-    image: ghcr.io/getzola/zola:v0.18.0
+    image: ghcr.io/getzola/zola:v0.22.1
     volumes:
       - ./:/app/
     working_dir: /app

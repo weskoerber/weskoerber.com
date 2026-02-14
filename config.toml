@@ -9,9 +9,9 @@ theme = "apollo"
 
 author = "Wes Koerber"
 
-[markdown]
-highlight_code = true
-highlight_theme = "gruvbox-dark"
+[markdown.highlighting]
+error_on_missing_language = true
+theme = "gruvbox-dark-medium"
 
 [extra]
 comment = false
