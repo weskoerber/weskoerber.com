@@ -104,6 +104,12 @@ but it prints the name of the file before its contents. This allows me to know
 where the file exists, and I can parse that and write the contents to the
 appropriate location.
 
+# Implementation
+
+I created a [repo on Codeberg](https://codeberg.org/weskoerber/gpgenv) that
+contains a script I use to automate various tasks, like saving and loading
+secrets to and from an encrypted file. Check it out!
+
 [^1]: I still think YNAB is a good deal. If you use it carefully, you'll
 probably save your subscription cost several time over if you really pay
 attention to and stick to your budget.
