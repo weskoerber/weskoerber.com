@@ -1,6 +1,7 @@
 +++
 title = "STM32 'Hello, world!' with Zig"
 date = "2024-09-23"
+updated = "2026-03-12"
 +++
 
 # Introduction
@@ -664,6 +665,14 @@ To do this, we'll need to refer back to the symbols we created in the linker scr
 For our `.bss` section, we need to zero out all memory between `_szero` and
 `_ezero`. For the `.data` section, we need to copy the memory from `_ldata`
 into the memory from `_sdata` to `_edata`. Let's do this in our `_start()` function:
+
+> **NOTE:** The original startup code contained a bug and is now hidden (you can
+still click to expand it to show the original). It's been replaced by a working
+snippet. See [Update 2026-03-12](#update-2026-03-12) for more information.
+
+<details>
+<summary>This startup code contains a bug and has been hidden. Click to expand</summary>
+
 ```zig
 extern var _szero: u32;
 extern var _ezero: u32;
@@ -682,6 +691,38 @@ export fn _start() void {
     }
 
     const data_len = _edata - _sdata;
+    if (data_len > 0) {
+        @memcpy(sdata[0..data_len], ldata[0..data_len]);
+    }
+
+    main();
+
+    while (true) {
+        asm volatile ("nop");
+    }
+}
+```
+
+</details>
+
+```zig
+extern var _szero: u32;
+extern var _ezero: u32;
+extern var _sdata: u32;
+extern var _edata: u32;
+extern var _ldata: u32;
+
+export fn _start() void {
+    const szero: [*]u8 = @ptrCast(&_szero);
+    const sdata: [*]u8 = @ptrCast(&_sdata);
+    const ldata: [*]u8 = @ptrCast(&_ldata);
+
+    const bss_len = @intFromPtr(&_ezero) - @intFromPtr(&_szero);
+    if (bss_len > 0) {
+        @memset(szero[0..bss_len], 0);
+    }
+
+    const data_len = @intFromPtr(&_edata) - @intFromPtr(&_sdata);
     if (data_len > 0) {
         @memcpy(sdata[0..data_len], ldata[0..data_len]);
     }
@@ -848,6 +889,40 @@ and the `0.14.0-dev` branch has seemingly more changes than ever. Since
 `0.11.0`, the language, its standard library, and its build system have seem
 massive improvements. If you're looking to try out Zig, there's no better time
 than now!.
+
+# Update 2026-03-12
+
+On 2026-03-05 I received an email from Alexandre Blais informing me there were
+some bugs in the startup code that caused his MCU to crash, use to much memory,
+and fill the memory sections with garbage data.
+
+The first bug was caused by an incorrect pointer type and length. `szero`,
+`sdata`, and `ldata` were all pointers to `u32`s, but `bss_len` and `data_len`
+were sections lengths, in bytes. By changing the type from `[*]u32` to `[*]u8`,
+`@memset`/`@memcpy` will increment the pointer 1 byte. For example, the `[*]u32`
+will increment `0x0800_0000` -> `0x0800_0004` -> `0x0800_0008`, and so on. The
+`[*]u8` will increment `0x0800_0000` -> `0x0800_0001` -> `0x0800_0002`, and so
+on. This is why there was 4x memory usage and probably why it crashed.
+
+The second bug was caused by improper use of linker symbols. Linker symbols
+don't have "values" the way a variable in code does. Linker symbols refer to
+adresses, whereas variables refer to the contents of a variable. By referring to
+the linker symbols directly, the code was reading uninitialized garbage memory.
+This was happening for the calculation of `bss_len` and `data_len`:
+```zig
+const bss_len = _ezero - _szero;
+const data_len = _edata - _sdata;
+```
+Instead of referring to the contents of those symbols, we need to refer to the
+memory address of the symbols:
+```zig
+const bss_len = @intFromPtr(&_ezero) - @intFromPtr(&_szero);
+const data_len = @intFromPtr(&_edata) - @intFromPtr(&_sdata);
+```
+Now, we're calculating the distance between memory addresses instead of reading
+garbage memory.
+
+Thank you Alexandre for the correction!
 
 ---
 
