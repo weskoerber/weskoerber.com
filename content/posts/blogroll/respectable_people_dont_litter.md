@@ -1,6 +1,6 @@
 +++
 title = "Respectable people don't litter"
-date = "2026-05-05"
+date = "2026-07-08"
 
 [extra]
 source_name = "theorangeduck.com"

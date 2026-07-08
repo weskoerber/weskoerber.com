@@ -1,6 +1,6 @@
 +++
 title = "All means are fair except solving the problem"
-date = "2026-05-06"
+date = "2026-07-08"
 
 [extra]
 source_name = "yosefk.com"

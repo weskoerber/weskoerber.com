@@ -1,6 +1,6 @@
 +++
 title = "My Kind of REPL"
-date = "2023-07-05"
+date = "2026-07-08"
 
 [extra]
 source_name = "ianthehenry.com"
