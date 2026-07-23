@@ -1,5 +1,8 @@
 on: push
 name: Build and deploy GH Pages
+permissions:
+  contents: write
+  pages: write
 jobs:
   build:
     runs-on: ubuntu-latest
